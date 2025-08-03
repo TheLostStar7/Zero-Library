@@ -5,7 +5,7 @@ function Create(typestring,instance,props) local obj = typestring == "Instance.n
 function Library:CreateWindow(options)
     local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
-    Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3,})
+    Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3})
     local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
     local tl = Create("Instance.new","TextLabel",{Parent = f,Name = "Title",BackgroundTransparency = 1,Size = UDim2.new(0.4,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options.Title and options.Title ~= "" and options.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
     Create("Instance.new","UIPadding",{Parent = tl,PaddingBottom = UDim.new(0.4,0),PaddingLeft = UDim.new(0.02,0)})
@@ -19,6 +19,24 @@ function Library:CreateWindow(options)
     local ds,fs
     f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then d = false end end) end end)
     uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
+    if options.KeyBind then
+        if Enum.KeyCode[options.KeyBind:upper()] then
+            uis.InputBegan:Connect(function(i,game)
+                if not game and i.KeyCode == Enum.KeyCode[options.KeyBind:upper()] then
+                    f.Visible = not f.Visible
+                end
+            end)
+        else
+            warn("[ZeroLib] Invalid KeyBind: "..tostring(options.KeyBind))
+        end
+    else
+        uis.InputBegan:Connect(function(i,game)
+            if not game and i.KeyCode == Enum.KeyCode.X then
+                f.Visible = not f.Visible
+            end
+        end)
+        game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroHub",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8})
+    end
     local Tabs = {}
     function Tabs:AddTab(options_)
         local tbtn = Create("Instance.new","TextButton",{Parent = sf,Name = "Tab",BackgroundTransparency = 1,Size = UDim2.new(1,0,0.06,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_.Title and options_.Title ~= "" and options_.Title) or "Tab",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
