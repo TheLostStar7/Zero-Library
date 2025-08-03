@@ -2,6 +2,10 @@
 
 My First Ever Published UI Library. I Hope You Like It!
 
+## Credits.
+
+Solo Dev, TheLostStar7.
+
 ## Change Log.
 
 New Dragging System, Better And Improved.
