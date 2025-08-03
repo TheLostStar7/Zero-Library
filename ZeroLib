@@ -3,7 +3,7 @@ local Libray = {}
 local uis,ts,rs = game:GetService("UserInputService"),game:GetService("TweenService"),game:GetService("RunService")
 function Create(typestring,instance,props) local obj = typestring == "Instance.new" and Instance.new(instance) or typestring == "Drawing.new" and Drawing.new(instance) if not obj then return nil end for i,v in pairs(props or {}) do pcall(function() obj[i] = v end) end return obj end
 function Libray:CreateWindow(options)
-    local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling})
+    local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
     Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3,})
     local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
@@ -105,4 +105,5 @@ function Libray:CreateWindow(options)
     end
     return Tabs
 end
+function Libray:Destroy() if self.esg then self.esg:Destroy() self.esg = nil end end
 return Libray
