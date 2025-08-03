@@ -12,9 +12,11 @@ Future:
 Hopefully I'm Gonna Add A Dropdown.
 
 New:
-Label, Fits 191 Digits.
+Close/Open Keybind. Default Is X.
 
 Old:
+Label, Fits 191 Digits.
+-—{                 }—-
 New Dragging System, Better And Improved.
 
 ## Loadstring.
@@ -27,9 +29,10 @@ Loads The UI Library/UI Lib
 
 ## Window.
 ```lua
-local Window = ZeroLib:CreateWindow({Title = "Hello"})
+local Window = ZeroLib:CreateWindow({Title = "Hello",KeyBind = "E"})
 --[[
 Title = <string> - The Name Of The UI.
+KeyBind = <string> - The Keybind To Close/Open The UI.
 ]]
 ```
 
