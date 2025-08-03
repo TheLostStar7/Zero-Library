@@ -105,3 +105,4 @@ function Libray:CreateWindow(options)
     end
     return Tabs
 end
+return Libray
