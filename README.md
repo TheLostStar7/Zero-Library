@@ -17,7 +17,9 @@ Close/Open Keybind. Default Is X.
 Old:
 Label, Fits 191 Digits.
 
--—{..}—- | Little Man Looking At              The Older Logs
+Little Man Looking At The Older Logs. ↓
+
+-—{..}—-
 
 New Dragging System, Better And Improved.
 
