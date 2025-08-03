@@ -77,7 +77,6 @@ Text:Update("Hello")
 Argue[1] = <string> - The New Text Of The Label.
 ]]
 ```
-## ----------------------
 ```lua
 Text:Get()
 --[[
