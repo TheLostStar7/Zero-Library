@@ -17,7 +17,7 @@ Close/Open Keybind. Default Is X.
 Old:
 Label, Fits 191 Digits.
 
--—{                 }—-
+-—{.               .}—-
 
 New Dragging System, Better And Improved.
 
