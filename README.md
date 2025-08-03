@@ -8,6 +8,9 @@ Solo Dev, TheLostStar7.
 
 ## Change Log.
 
+Future:
+Hopefully I'm Gonna Add A Dropdown.
+
 New:
 Label, Fits 191 Digits.
 
