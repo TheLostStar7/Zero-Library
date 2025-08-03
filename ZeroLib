@@ -17,8 +17,7 @@ function Libray:CreateWindow(options)
     Create("Instance.new","UIListLayout",{Parent = f_2,SortOrder = Enum.SortOrder.LayoutOrder})
     local d = false
     local ds,fs
-    f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position end end)
-    f.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = false end end)
+    f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then d = false end end) end end)
     uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
     local Tabs = {}
     function Tabs:AddTab(options_)
