@@ -76,7 +76,7 @@ local Text = Tab:AddLabel({Text = "Yappers"})
 Text = <string> - The Text Of Label.
 ]]
 ```
-### Label Subtle Functions.
+### Label Subtitle Functions.
 ```lua
 Text:Update("Hello")
 --[[
