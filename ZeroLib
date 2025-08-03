@@ -108,7 +108,7 @@ function Library:CreateWindow(options)
                 if not success then
                     warn("[ZeroLib]["..(options_2.Flag or "Flagged").."] Error: "..err)
                 end
-                twn = ts:Create(f_4,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
+                twn = ts:Create(f_5,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
                 twn:Play()
                 twn.Completed:Wait()
             end)
