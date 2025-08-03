@@ -47,3 +47,8 @@ Flag = <string> - The Name Of The Flag Report.
 Callback = <function> - The Function Of The Button.
 ]]
 ```
+
+## Destroy.
+```lua
+ZeroLib:Destroy()
+```
