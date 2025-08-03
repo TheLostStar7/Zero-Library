@@ -8,6 +8,10 @@ Solo Dev, TheLostStar7.
 
 ## Change Log.
 
+New:
+Label, Fits 191 Digits.
+
+Old:
 New Dragging System, Better And Improved.
 
 ## Loadstring.
@@ -56,6 +60,28 @@ Title = <string> - The Name Of The Button.
 Description = <string> - The Name Of The Description.
 Flag = <string> - The Name Of The Flag Report.
 Callback = <function> - The Function Of The Button.
+]]
+```
+
+## Label.
+```lua
+local Text = Tab:AddLabel({Text = "Yappers"})
+--[[
+Text = <string> - The Text Of Label.
+]]
+```
+## Label Subtle Functions.
+```lua
+Text:Update("Hello")
+--[[
+Argue[1] = <string> - The New Text Of The Label.
+]]
+```
+## ----------------------
+```lua
+Text:Get()
+--[[
+Gives You The Current Text.
 ]]
 ```
 
