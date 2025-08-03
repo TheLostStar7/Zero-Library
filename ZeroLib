@@ -19,23 +19,17 @@ function Library:CreateWindow(options)
     local ds,fs
     f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then d = false end end) end end)
     uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
-    if options.KeyBind then
-        if Enum.KeyCode[options.KeyBind:upper()] then
-            uis.InputBegan:Connect(function(i,game)
-                if not game and i.KeyCode == Enum.KeyCode[options.KeyBind:upper()] then
-                    f.Visible = not f.Visible
-                end
-            end)
-        else
-            warn("[ZeroLib] Invalid KeyBind: "..tostring(options.KeyBind))
+    uis.InputBegan:Connect(function(i,gp)
+        local key = options.KeyBind and options.KeyBind:upper()
+        local blocked = key == "W" or key == "A" or key == "S" or key == "D"
+        local useKey = (key and Enum.KeyCode[key] and not blocked) and Enum.KeyCode[key] or Enum.KeyCode.X
+        if not gp and i.KeyCode == useKey then
+            f.Visible = not f.Visible
         end
-    else
-        uis.InputBegan:Connect(function(i,game)
-            if not game and i.KeyCode == Enum.KeyCode.X then
-                f.Visible = not f.Visible
-            end
-        end)
-        game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroHub",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8})
+    end)
+    if not options.KeyBind or not Enum.KeyCode[options.KeyBind:upper()] or options.KeyBind:upper():match("^[WASD]$") then
+        warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'")
+        game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8})
     end
     local Tabs = {}
     function Tabs:AddTab(options_)
