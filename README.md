@@ -5,6 +5,9 @@ My First Ever Published UI Library. I Hope You Like It!
 ## Loadstring.
 ```lua
 local ZeroLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TheLostStar7/Zero-Library/refs/heads/main/ZeroLib')))()
+--[[
+Loads The UI Library/UI Lib
+]]
 ```
 
 ## Window.
@@ -51,4 +54,7 @@ Callback = <function> - The Function Of The Button.
 ## Destroy.
 ```lua
 ZeroLib:Destroy()
+--[[
+Destroys The UI Lib
+]]
 ```
