@@ -57,12 +57,6 @@ function Libray:CreateWindow(options)
             local tbtn_ = Create("Instance.new","TextButton",{Parent = sf_,Name = "Button",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_1.Title and options_1.Title ~= "" and options_1.Title) or "Button",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
             Create("Instance.new","UIPadding",{Parent = tbtn_,PaddingLeft = UDim.new(0.02,0)})
             tbtn_.Activated:Connect(function()
-                local twn = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
-                twn:Play()
-                twn.Completed:Wait()
-                local twn_ = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
-                twn_:Play()
-                twn_.Completed:Wait()
                 local success,err = pcall(function()
                     if typeof(options_1.Callback) == "function" then
                         options_1.Callback()
@@ -71,6 +65,12 @@ function Libray:CreateWindow(options)
                 if not success then
                     warn("[ZeroLib]["..(options_1.Flag or "Flagged").."] Error: "..err)
                 end
+                local twn = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
+                twn:Play()
+                twn.Completed:Wait()
+                local twn_ = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
+                twn_:Play()
+                twn_.Completed:Wait()
             end)
         end
         function Elements:AddToggle(options_2)
@@ -88,9 +88,6 @@ function Libray:CreateWindow(options)
             tbtn_1.Activated:Connect(function()
                 if twn and twn.PlaybackState == Enum.PlaybackState.Playing then return end
                 toggled = not toggled
-                twn = ts:Create(f_4,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
-                twn:Play()
-                twn.Completed:Wait()
                 local success,err = pcall(function()
                     if typeof(options_2.Callback) == "function" then
                         options_2.Callback(toggled)
@@ -99,6 +96,9 @@ function Libray:CreateWindow(options)
                 if not success then
                     warn("[ZeroLib]["..(options_2.Flag or "Flagged").."] Error: "..err)
                 end
+                twn = ts:Create(f_4,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
+                twn:Play()
+                twn.Completed:Wait()
             end)
         end
         return Elements
