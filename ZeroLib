@@ -1,8 +1,8 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
-local Libray = {}
+local Library = {}
 local uis,ts,rs = game:GetService("UserInputService"),game:GetService("TweenService"),game:GetService("RunService")
 function Create(typestring,instance,props) local obj = typestring == "Instance.new" and Instance.new(instance) or typestring == "Drawing.new" and Drawing.new(instance) if not obj then return nil end for i,v in pairs(props or {}) do pcall(function() obj[i] = v end) end return obj end
-function Libray:CreateWindow(options)
+function Library:CreateWindow(options)
     local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
     Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3,})
@@ -39,7 +39,7 @@ function Libray:CreateWindow(options)
             end
             currenttab = tbtn
             tbtn.TextColor3 = Color3.fromRGB(160,160,160)
-            local twn = ts:Create(tbtn,TweenInfo.new(.3,Enum.EasingStyle.Linear, Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
+            local twn = ts:Create(tbtn,TweenInfo.new(.3,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
             twn:Play()
             twn.Completed:Wait()
             for _,v in ipairs(sf:GetChildren()) do
@@ -49,11 +49,12 @@ function Libray:CreateWindow(options)
             end
         end)
         local Elements = {}
-        function Elements:AddSection(options_0)
+        function Elements:AddDropDown(options_0)
             
         end
         function Elements:AddButton(options_1)
-            local tbtn_ = Create("Instance.new","TextButton",{Parent = sf_,Name = "Button",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_1.Title and options_1.Title ~= "" and options_1.Title) or "Button",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
+            local f_3 = Create("Instance.new","Frame",{Parent = sf_,Name = "Button",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
+            local tbtn_ = Create("Instance.new","TextButton",{Parent = f_3,BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_1.Title and options_1.Title ~= "" and options_1.Title) or "Button",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
             Create("Instance.new","UIPadding",{Parent = tbtn_,PaddingLeft = UDim.new(0.02,0)})
             tbtn_.Activated:Connect(function()
                 local success,err = pcall(function()
@@ -64,24 +65,24 @@ function Libray:CreateWindow(options)
                 if not success then
                     warn("[ZeroLib]["..(options_1.Flag or "Flagged").."] Error: "..err)
                 end
-                local twn = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
+                local twn = ts:Create(tbtn_,TweenInfo.new(.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
                 twn:Play()
                 twn.Completed:Wait()
-                local twn_ = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
+                local twn_ = ts:Create(tbtn_,TweenInfo.new(.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
                 twn_:Play()
                 twn_.Completed:Wait()
             end)
         end
         function Elements:AddToggle(options_2)
-            local f_3 = Create("Instance.new","Frame",{Parent = sf_,Name = "Toggle",BackgroundColor3 = Color3.new(0.0980392,0.0980392,0.0980392),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
-            local f_4 = Create("Instance.new","Frame",{Parent = f_3,Name = "Status",BackgroundColor3 = Color3.new(0.137255,0.137255,0.137255),BorderSizePixel = 0,Position = UDim2.new(0.91,0,0.213,0),Size = UDim2.new(0.069,0,0.6,0)})
-            local tl_ = Create("Instance.new","TextLabel",{Parent = f_3,Name = "Title",BackgroundTransparency = 1,Size = (options_2.Description and UDim2.new(0.9,0,0.7,0) or UDim2.new(0.9,0,1,0)),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_2.Title and options_2.Title ~= "" and options_2.Title) or "Title",TextColor3 = Color3.new(0.784314,0.784314,0.784314),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
+            local f_4 = Create("Instance.new","Frame",{Parent = sf_,Name = "Toggle",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
+            local f_5 = Create("Instance.new","Frame",{Parent = f_4,Name = "Status",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0.91,0,0.213,0),Size = UDim2.new(0.069,0,0.6,0)})
+            local tl_ = Create("Instance.new","TextLabel",{Parent = f_4,Name = "Title",BackgroundTransparency = 1,Size = (options_2.Description and UDim2.new(0.9,0,0.7,0) or UDim2.new(0.9,0,1,0)),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_2.Title and options_2.Title ~= "" and options_2.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
             Create("Instance.new","UIPadding",{Parent = tl_,PaddingLeft = UDim.new(0.02,0)})
             if options_2.Description then
-                local tl_1 = Create("Instance.new","TextLabel",{Parent = f_3,Name = "Description",Position = UDim2.new(0,0,0.58,0),Size = UDim2.new(0.9,0,0.4,0),BackgroundTransparency = 1,Text = (options_2.Description and options_2.Description ~= "" and options_2.Description) or "Description",TextColor3 = Color3.new(0.627451,0.627451,0.627451),TextSize = 10,FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true})
+                local tl_1 = Create("Instance.new","TextLabel",{Parent = f_4,Name = "Description",Position = UDim2.new(0,0,0.58,0),Size = UDim2.new(0.9,0,0.4,0),BackgroundTransparency = 1,Text = (options_2.Description and options_2.Description ~= "" and options_2.Description) or "Description",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 10,FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true})
                 Create("Instance.new","UIPadding",{Parent = tl_1,PaddingLeft = UDim.new(0.02,0)})
             end
-            local tbtn_1 = Create("Instance.new","TextButton",{Parent = f_3,Name = "Tigger",Size = UDim2.new(1,0,1,0),BackgroundTransparency = 1,Text = "",})
+            local tbtn_1 = Create("Instance.new","TextButton",{Parent = f_4,Name = "Tigger",Size = UDim2.new(1,0,1,0),BackgroundTransparency = 1,Text = "",})
             local toggled = false
             local twn
             tbtn_1.Activated:Connect(function()
@@ -100,9 +101,24 @@ function Libray:CreateWindow(options)
                 twn.Completed:Wait()
             end)
         end
+        function Elements:Label(options_3)
+            local f_6 = Create("Instance.new","Frame",{Parent = sf_,Name = "Label",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true,})
+            local tl_2 = Create("Instance.new","TextLabel",{Parent = f_6,BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextColor3 = Color3.fromRGB(255,30,109),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true,Text = options_3.Text or "Label"})
+            Create("Instance.new","UIPadding",{Parent = tl_2,PaddingLeft = UDim.new(0.02,0)})
+            local function resize()
+                local size = 0.1
+                tl_2.TextSize = 13
+                for _ = 1,2 do f_6.Size = UDim2.new(0.98,0,size,0) task.wait() if tl_2.TextFits then return end size += 0.01 end
+                for i = 12,10,-1 do tl_2.TextSize = i task.wait() if tl_2.TextFits then return end end
+            end
+            resize()
+            local obj = {}
+            function obj:Update(new) tl_2.Text = new resize() end
+            return obj
+        end
         return Elements
     end
     return Tabs
 end
-function Libray:Destroy() if self.esg then self.esg:Destroy() self.esg = nil end end
-return Libray
+function Library:Destroy() if self.esg then self.esg:Destroy() self.esg = nil end end
+return Library
