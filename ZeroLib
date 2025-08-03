@@ -101,7 +101,7 @@ function Library:CreateWindow(options)
                 twn.Completed:Wait()
             end)
         end
-        function Elements:Label(options_3)
+        function Elements:AddLabel(options_3)
             local f_6 = Create("Instance.new","Frame",{Parent = sf_,Name = "Label",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true,})
             local tl_2 = Create("Instance.new","TextLabel",{Parent = f_6,BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextColor3 = Color3.fromRGB(255,30,109),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true,Text = options_3.Text or "Label"})
             Create("Instance.new","UIPadding",{Parent = tl_2,PaddingLeft = UDim.new(0.02,0)})
@@ -114,6 +114,7 @@ function Library:CreateWindow(options)
             resize()
             local obj = {}
             function obj:Update(new) tl_2.Text = new resize() end
+            function obj:Get() return tl_2.Text end
             return obj
         end
         return Elements
