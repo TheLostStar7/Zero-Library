@@ -2,6 +2,10 @@
 
 My First Ever Published UI Library. I Hope You Like It!
 
+## Change Log.
+
+New Dragging System, Better And Improved.
+
 ## Loadstring.
 ```lua
 local ZeroLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TheLostStar7/Zero-Library/refs/heads/main/ZeroLib')))()
