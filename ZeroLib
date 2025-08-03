@@ -1,0 +1,107 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+local Libray = {}
+local uis,ts,rs = game:GetService("UserInputService"),game:GetService("TweenService"),game:GetService("RunService")
+function Create(typestring,instance,props) local obj = typestring == "Instance.new" and Instance.new(instance) or typestring == "Drawing.new" and Drawing.new(instance) if not obj then return nil end for i,v in pairs(props or {}) do pcall(function() obj[i] = v end) end return obj end
+function Libray:CreateWindow(options)
+    local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling})
+    local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
+    Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3,})
+    local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
+    local tl = Create("Instance.new","TextLabel",{Parent = f,Name = "Title",BackgroundTransparency = 1,Size = UDim2.new(0.4,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options.Title and options.Title ~= "" and options.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
+    Create("Instance.new","UIPadding",{Parent = tl,PaddingBottom = UDim.new(0.4,0),PaddingLeft = UDim.new(0.02,0)})
+    local f_0 = Create("Instance.new","Frame",{Parent = f,Name = "Tab Container",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0.01,0,0.06,0),Size = UDim2.new(0.32,0,0.926,0)})
+    local sf = Create("Instance.new","ScrollingFrame",{Parent = f_0,Name = "Main Container",BackgroundColor3 = Color3.fromRGB(50,50,50),BorderSizePixel = 0,Position = UDim2.new(0.015,0,0.008,0),Size = UDim2.new(0.965,0,0.985,0),AutomaticCanvasSize = Enum.AutomaticSize.Y,CanvasSize = UDim2.new(0,0,0,0),ScrollingDirection = Enum.ScrollingDirection.Y,ScrollBarThickness = 2})
+    Create("Instance.new","UIListLayout",{Parent = sf,SortOrder = Enum.SortOrder.LayoutOrder})
+    local f_1 = Create("Instance.new","Frame",{Parent = f,Name = "Context Contrainer",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0.34,0,0.06,0),Size = UDim2.new(0.65,0,0.926,0)})
+    local f_2 = Create("Instance.new","Frame",{Parent = f_1,Name = "Holder",BackgroundColor3 = Color3.fromRGB(50,50,50),BorderSizePixel = 0,Position = UDim2.new(0.01,0,0.008,0),Size = UDim2.new(0.977,0,0.985,0)})
+    Create("Instance.new","UIListLayout",{Parent = f_2,SortOrder = Enum.SortOrder.LayoutOrder})
+    local d = false
+    local ds,fs
+    f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position end end)
+    f.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = false end end)
+    uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
+    local Tabs = {}
+    function Tabs:AddTab(options_)
+        local tbtn = Create("Instance.new","TextButton",{Parent = sf,Name = "Tab",BackgroundTransparency = 1,Size = UDim2.new(1,0,0.06,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_.Title and options_.Title ~= "" and options_.Title) or "Tab",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
+        Create("Instance.new","UIPadding",{Parent = tbtn,PaddingLeft = UDim.new(0.03,0)})
+        local sf_ = Create("Instance.new","ScrollingFrame",{Parent = f_2,Name = "Tabs Context",BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),AutomaticCanvasSize = Enum.AutomaticSize.Y,CanvasSize = UDim2.new(0,0,0,0),ScrollingDirection = Enum.ScrollingDirection.Y,ScrollBarThickness = 2,Visible = false})
+        Create("Instance.new","UIListLayout",{Parent = sf_,Padding = UDim.new(0.03,0),SortOrder = Enum.SortOrder.LayoutOrder})
+        Create("Instance.new","UIPadding",{Parent = sf_,PaddingBottom = UDim.new(0.02,0),PaddingTop = UDim.new(0.02,0),PaddingLeft = UDim.new(0.02,0)})
+        local currenttab = nil
+        tbtn.Activated:Connect(function()
+            for k,v in ipairs(f_2:GetChildren()) do
+                if v:IsA("ScrollingFrame") then
+                    v.Visible = false
+                end
+            end
+            sf_.Visible = true
+            if currenttab and currenttab ~= tbtn then
+                currenttab.TextColor3 = Color3.fromRGB(160,160,160)
+            end
+            currenttab = tbtn
+            tbtn.TextColor3 = Color3.fromRGB(160,160,160)
+            local twn = ts:Create(tbtn,TweenInfo.new(.3,Enum.EasingStyle.Linear, Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
+            twn:Play()
+            twn.Completed:Wait()
+            for _,v in ipairs(sf:GetChildren()) do
+                if v:IsA("TextButton") and v ~= currenttab then
+                    v.TextColor3 = Color3.fromRGB(160,160,160)
+                end
+            end
+        end)
+        local Elements = {}
+        function Elements:AddSection(options_0)
+            
+        end
+        function Elements:AddButton(options_1)
+            local tbtn_ = Create("Instance.new","TextButton",{Parent = sf_,Name = "Button",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_1.Title and options_1.Title ~= "" and options_1.Title) or "Button",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
+            Create("Instance.new","UIPadding",{Parent = tbtn_,PaddingLeft = UDim.new(0.02,0)})
+            tbtn_.Activated:Connect(function()
+                local twn = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
+                twn:Play()
+                twn.Completed:Wait()
+                local twn_ = ts:Create(tbtn_,TweenInfo.new(.55,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
+                twn_:Play()
+                twn_.Completed:Wait()
+                local success,err = pcall(function()
+                    if typeof(options_1.Callback) == "function" then
+                        options_1.Callback()
+                    end
+                end)
+                if not success then
+                    warn("[ZeroLib]["..(options_1.Flag or "Flagged").."] Error: "..err)
+                end
+            end)
+        end
+        function Elements:AddToggle(options_2)
+            local f_3 = Create("Instance.new","Frame",{Parent = sf_,Name = "Toggle",BackgroundColor3 = Color3.new(0.0980392,0.0980392,0.0980392),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
+            local f_4 = Create("Instance.new","Frame",{Parent = f_3,Name = "Status",BackgroundColor3 = Color3.new(0.137255,0.137255,0.137255),BorderSizePixel = 0,Position = UDim2.new(0.91,0,0.213,0),Size = UDim2.new(0.069,0,0.6,0)})
+            local tl_ = Create("Instance.new","TextLabel",{Parent = f_3,Name = "Title",BackgroundTransparency = 1,Size = (options_2.Description and UDim2.new(0.9,0,0.7,0) or UDim2.new(0.9,0,1,0)),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_2.Title and options_2.Title ~= "" and options_2.Title) or "Title",TextColor3 = Color3.new(0.784314,0.784314,0.784314),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
+            Create("Instance.new","UIPadding",{Parent = tl_,PaddingLeft = UDim.new(0.02,0)})
+            if options_2.Description then
+                local tl_1 = Create("Instance.new","TextLabel",{Parent = f_3,Name = "Description",Position = UDim2.new(0,0,0.58,0),Size = UDim2.new(0.9,0,0.4,0),BackgroundTransparency = 1,Text = (options_2.Description and options_2.Description ~= "" and options_2.Description) or "Description",TextColor3 = Color3.new(0.627451,0.627451,0.627451),TextSize = 10,FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true})
+                Create("Instance.new","UIPadding",{Parent = tl_1,PaddingLeft = UDim.new(0.02,0)})
+            end
+            local tbtn_1 = Create("Instance.new","TextButton",{Parent = f_3,Name = "Tigger",Size = UDim2.new(1,0,1,0),BackgroundTransparency = 1,Text = "",})
+            local toggled = false
+            local twn
+            tbtn_1.Activated:Connect(function()
+                if twn and twn.PlaybackState == Enum.PlaybackState.Playing then return end
+                toggled = not toggled
+                twn = ts:Create(f_4,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
+                twn:Play()
+                twn.Completed:Wait()
+                local success,err = pcall(function()
+                    if typeof(options_2.Callback) == "function" then
+                        options_2.Callback(toggled)
+                    end
+                end)
+                if not success then
+                    warn("[ZeroLib]["..(options_2.Flag or "Flagged").."] Error: "..err)
+                end
+            end)
+        end
+        return Elements
+    end
+    return Tabs
+end
