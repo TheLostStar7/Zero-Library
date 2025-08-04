@@ -12,15 +12,13 @@ Future:
 Hopefully I'm Gonna Add A Dropdown.
 
 New:
-Close/Open Keybind. Default Is X.
+Reworked The Keybinds
 
 Old:
+Close/Open Keybind. Default Is X.
+--
 Label, Fits 191 Digits.
-
-Little Man Looking At The Older Logs. ↓
-
--—{..}—-
-
+--
 New Dragging System, Better And Improved.
 
 ## Loadstring.
