@@ -84,7 +84,7 @@ Text = <string> - The Text Of Label.
 ```lua
 Text:Update("Hello")
 --[[
-Argue[1] = <string> - The New Text Of The Label.
+Argument[1] = <string> - The New Text Of The Label.
 ]]
 ```
 ```lua
@@ -106,6 +106,6 @@ Destroys The UI Lib
 ```lua
 ZeroLib:SetKeyBind("K")
 --[[
-Argue[1] = <string> - New KeyBind To Close The UI With.
+Argument[1] = <string> - New KeyBind To Close The UI With.
 ]]
 ```
