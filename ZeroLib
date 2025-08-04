@@ -19,18 +19,12 @@ function Library:CreateWindow(options)
     local ds,fs
     f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then d = false end end) end end)
     uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
-    uis.InputBegan:Connect(function(i,gp)
-        local key = options.KeyBind and options.KeyBind:upper()
-        local blocked = key == "W" or key == "A" or key == "S" or key == "D"
-        local useKey = (key and Enum.KeyCode[key] and not blocked) and Enum.KeyCode[key] or Enum.KeyCode.X
-        if not gp and i.KeyCode == useKey then
-            f.Visible = not f.Visible
-        end
-    end)
-    if not options.KeyBind or not Enum.KeyCode[options.KeyBind:upper()] or options.KeyBind:upper():match("^[WASD]$") then
-        warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'")
-        game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8})
-    end
+    local keys = {W = true,A = true,S = true,D = true}
+    local bind = options.KeyBind and options.KeyBind:upper()
+    local check = bind and Enum.KeyCode[bind] and not keys[bind]
+    local used = check and Enum.KeyCode[bind] or Enum.KeyCode.X
+    if not check then warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'") game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8}) end
+    uis.InputBegan:Connect(function(i,gp) if not gp and i.KeyCode == used then f.Visible = not f.Visible end end)
     local Tabs = {}
     function Tabs:AddTab(options_)
         local tbtn = Create("Instance.new","TextButton",{Parent = sf,Name = "Tab",BackgroundTransparency = 1,Size = UDim2.new(1,0,0.06,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_.Title and options_.Title ~= "" and options_.Title) or "Tab",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
