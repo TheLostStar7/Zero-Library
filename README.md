@@ -22,6 +22,8 @@ Guys please bare with me, i need some time to think about a button design but fo
 
 New Close/Open Button.
 
+Old:
+
 Smoother And Better Tweening For The AddTab And AddToggle.
 
 AddToggle And AddButton Flagging Changes.
@@ -31,8 +33,6 @@ AddButton Hovering System.
 New Subtitle Function.
 
 Reworked Ths Keybinds.
-
-Old:
 
 Close/Open Keybind. Default Is X.
 
