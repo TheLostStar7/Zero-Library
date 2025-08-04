@@ -12,13 +12,19 @@ Future:
 Hopefully I'm Gonna Add A Dropdown.
 
 New:
+
 Smoother And Better Tweening For The AddTab And AddToggle.
+
 AddToggle And AddButton Flagging Changes.
+
 AddButton Hovering System.
+
 New Subtitle Function.
+
 Reworked Ths Keybinds.
 
 Old:
+
 Close/Open Keybind. Default Is X.
 
 Label, Fits 191 Digits.
