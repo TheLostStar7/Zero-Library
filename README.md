@@ -14,6 +14,12 @@ Hopefully I'm Gonna Add A Dropdown.
 
 New:
 
+Message:
+
+Guys please bare with me, i need some time to think about a button design but for now we'll have this.
+
+New Close/Open Button.
+
 Smoother And Better Tweening For The AddTab And AddToggle.
 
 AddToggle And AddButton Flagging Changes.
