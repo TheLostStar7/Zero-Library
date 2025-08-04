@@ -40,6 +40,22 @@ KeyBind = <string> - The Keybind To Close/Open The UI.
 ]]
 ```
 
+### Destroy.
+```lua
+ZeroLib:Destroy()
+--[[
+Destroys The UI Lib
+]]
+```
+
+### KeyBind.
+```lua
+ZeroLib:SetKeyBind("K")
+--[[
+Argument[1] = <string> - New KeyBind To Close The UI With.
+]]
+```
+
 ## Tab.
 ```lua
 local Tab = Window:AddTab({Title = "Main Tab"})
@@ -91,21 +107,5 @@ Argument[1] = <string> - The New Text Of The Label.
 Text:Get()
 --[[
 Gives You The Current Text.
-]]
-```
-
-## Destroy.
-```lua
-ZeroLib:Destroy()
---[[
-Destroys The UI Lib
-]]
-```
-
-## KeyBind.
-```lua
-ZeroLib:SetKeyBind("K")
---[[
-Argument[1] = <string> - New KeyBind To Close The UI With.
 ]]
 ```
