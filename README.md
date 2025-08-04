@@ -109,3 +109,10 @@ Text:Get()
 Gives You The Current Text.
 ]]
 ```
+
+
+## Loadstring.
+local ZeroLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TheLostStar7/Zero-Library/refs/heads/main/ZeroLib')))()
+--[[
+Loads The UI Library/UI Lib
+]]
