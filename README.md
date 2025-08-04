@@ -64,10 +64,11 @@ Argument[1] = <string> - New KeyBind To Close The UI With.
 
 ## Window.
 ```lua
-local Window = ZeroLib:CreateWindow({Title = "Hello",KeyBind = "E"})
+local Window = ZeroLib:CreateWindow({Title = "Hello",KeyBind = "E",Button = true})
 --[[
 Title = <string> - The Name Of The UI.
 KeyBind = <string> - The Keybind To Close/Open The UI.
+Button = <boolean> - Shows You The Button.
 ]]
 ```
 
