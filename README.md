@@ -9,6 +9,7 @@ Solo Dev, TheLostStar7.
 ## Change Log.
 
 Future:
+
 Hopefully I'm Gonna Add A Dropdown.
 
 New:
