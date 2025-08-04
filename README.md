@@ -16,9 +16,9 @@ Reworked The Keybinds
 
 Old:
 Close/Open Keybind. Default Is X.
---
+——
 Label, Fits 191 Digits.
---
+——
 New Dragging System, Better And Improved.
 
 ## Loadstring.
