@@ -22,9 +22,9 @@ function Library:CreateWindow(options)
     local keys = {W = true,A = true,S = true,D = true}
     local bind = options.KeyBind and options.KeyBind:upper()
     local check = bind and Enum.KeyCode[bind] and not keys[bind]
-    local used = check and Enum.KeyCode[bind] or Enum.KeyCode.X
+    self._keybind = check and Enum.KeyCode[bind] or Enum.KeyCode.X
     if not check then warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'") game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8}) end
-    uis.InputBegan:Connect(function(i,gp) if not gp and i.KeyCode == used then f.Visible = not f.Visible end end)
+    uis.InputBegan:Connect(function(i,gp) if not gp and i.KeyCode == self._keybind then f.Visible = not f.Visible end end)
     local Tabs = {}
     function Tabs:AddTab(options_)
         local tbtn = Create("Instance.new","TextButton",{Parent = sf,Name = "Tab",BackgroundTransparency = 1,Size = UDim2.new(1,0,0.06,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_.Title and options_.Title ~= "" and options_.Title) or "Tab",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
@@ -128,4 +128,5 @@ function Library:CreateWindow(options)
     return Tabs
 end
 function Library:Destroy() if self.esg then self.esg:Destroy() self.esg = nil end end
+function Library:SetKeyBind(new) local key = Enum.KeyCode[new:upper()] if key and not ({W=true,A=true,S=true,D=true})[new:upper()] then self._keybind = key return true else warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(new)) return false end end
 return Library
