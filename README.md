@@ -12,9 +12,11 @@ Future:
 Hopefully I'm Gonna Add A Dropdown.
 
 New:
-Reworked The Keybinds
+New Subtitle Function.
 
 Old:
+Reworked The Keybinds
+
 Close/Open Keybind. Default Is X.
 
 Label, Fits 191 Digits.
@@ -97,5 +99,13 @@ Gives You The Current Text.
 ZeroLib:Destroy()
 --[[
 Destroys The UI Lib
+]]
+```
+
+## KeyBind.
+```lua
+ZeroLib:SetKeyBind("K")
+--[[
+Argue[1] = <string> - New KeyBind To Close The UI With.
 ]]
 ```
