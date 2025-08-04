@@ -6,6 +6,11 @@ function Library:CreateWindow(options)
     local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
     Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3})
+    if options.Button then
+        local fbtn = Create("Instance.new","Frame",{Parent = sg,Name = "Button Frame",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0,0,0.16,0),Size = UDim2.new(0,130,0,50),Active = true,Draggable = true})
+        local btn = Create("Instance.new","TextButton",{Parent = fbtn,Name = "Main Button",BackgroundColor3 = Color3.fromRGB(50,50,50),BorderSizePixel = 0,Position = UDim2.new(0,5,0,6),Size = UDim2.new(0,120,0,38),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = "Close/Open",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 17})
+        btn.Activated:Connect(function() f.Visible = not f.Visible end)
+    end
     local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
     local tl = Create("Instance.new","TextLabel",{Parent = f,Name = "Title",BackgroundTransparency = 1,Size = UDim2.new(0.4,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options.Title and options.Title ~= "" and options.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
     Create("Instance.new","UIPadding",{Parent = tl,PaddingBottom = UDim.new(0.4,0),PaddingLeft = UDim.new(0.02,0)})
