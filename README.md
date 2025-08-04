@@ -131,7 +131,7 @@ Gives You The Current Text.
 
 ## Input.
 ```lua
-Tab:AddInput({Title = "Printer", Description = "Print Stuff!",Flag = "Printer",Callback = function(text)
+local Input = Tab:AddInput({Title = "Printer", Description = "Print Stuff!",Flag = "Printer",Callback = function(text)
     print(text)
 end,})
 --[[
