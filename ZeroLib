@@ -17,42 +17,61 @@ function Library:CreateWindow(options)
     Create("Instance.new","UIListLayout",{Parent = f_2,SortOrder = Enum.SortOrder.LayoutOrder})
     local d = false
     local ds,fs
-    f.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true ds = i.Position fs = f.Position i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then d = false end end) end end)
-    uis.InputChanged:Connect(function(i) if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play() end end)
+    f.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+            d = true
+            ds = i.Position
+            fs = f.Position
+            i.Changed:Connect(function()
+                if i.UserInputState == Enum.UserInputState.End then
+                    d = false
+                end
+            end)
+        end
+    end)
+    uis.InputChanged:Connect(function(i)
+        if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then
+            ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play()
+        end
+    end)
     local keys = {W = true,A = true,S = true,D = true}
     local bind = options.KeyBind and options.KeyBind:upper()
     local check = bind and Enum.KeyCode[bind] and not keys[bind]
     self._keybind = check and Enum.KeyCode[bind] or Enum.KeyCode.X
-    if not check then warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'") game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8}) end
-    uis.InputBegan:Connect(function(i,gp) if not gp and i.KeyCode == self._keybind then f.Visible = not f.Visible end end)
-    local Tabs = {}
+    if not check then
+        warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(options.KeyBind).." — Defaulting to 'X'")
+        game:GetService("StarterGui"):SetCore("SendNotification",{Title = "ZeroLib",Text = "Default KeyBind: X",Icon = "rbxassetid://7733658504",Duration = 8})
+    end
+    uis.InputBegan:Connect(function(i,gp)
+        if not gp and i.KeyCode == self._keybind then
+            f.Visible = not f.Visible
+        end
+    end)
+    local Tabs = {Active = nil,Debounce = false}
     function Tabs:AddTab(options_)
         local tbtn = Create("Instance.new","TextButton",{Parent = sf,Name = "Tab",BackgroundTransparency = 1,Size = UDim2.new(1,0,0.06,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_.Title and options_.Title ~= "" and options_.Title) or "Tab",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
         Create("Instance.new","UIPadding",{Parent = tbtn,PaddingLeft = UDim.new(0.03,0)})
         local sf_ = Create("Instance.new","ScrollingFrame",{Parent = f_2,Name = "Tabs Context",BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),AutomaticCanvasSize = Enum.AutomaticSize.Y,CanvasSize = UDim2.new(0,0,0,0),ScrollingDirection = Enum.ScrollingDirection.Y,ScrollBarThickness = 2,Visible = false})
         Create("Instance.new","UIListLayout",{Parent = sf_,Padding = UDim.new(0.03,0),SortOrder = Enum.SortOrder.LayoutOrder})
         Create("Instance.new","UIPadding",{Parent = sf_,PaddingBottom = UDim.new(0.02,0),PaddingTop = UDim.new(0.02,0),PaddingLeft = UDim.new(0.02,0)})
-        local currenttab = nil
         tbtn.Activated:Connect(function()
-            for k,v in ipairs(f_2:GetChildren()) do
+            if Tabs.Debounce or Tabs.Active == tbtn then return end
+            Tabs.Debounce = true
+            for _,v in ipairs(f_2:GetChildren()) do
                 if v:IsA("ScrollingFrame") then
                     v.Visible = false
                 end
             end
             sf_.Visible = true
-            if currenttab and currenttab ~= tbtn then
-                currenttab.TextColor3 = Color3.fromRGB(160,160,160)
+            local prev = Tabs.Active
+            Tabs.Active = tbtn
+            ts:Create(tbtn,TweenInfo.new(.2,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)}):Play()
+            if prev and prev ~= tbtn then
+                ts:Create(prev,TweenInfo.new(.2,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(160,160,160)}):Play()
             end
-            currenttab = tbtn
-            tbtn.TextColor3 = Color3.fromRGB(160,160,160)
-            local twn = ts:Create(tbtn,TweenInfo.new(.3,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
-            twn:Play()
-            twn.Completed:Wait()
-            for _,v in ipairs(sf:GetChildren()) do
-                if v:IsA("TextButton") and v ~= currenttab then
-                    v.TextColor3 = Color3.fromRGB(160,160,160)
-                end
-            end
+            task.delay(0.25,function()
+                Tabs.Debounce = false
+            end)
         end)
         local Elements = {}
         function Elements:AddDropDown(options_0)
@@ -62,21 +81,19 @@ function Library:CreateWindow(options)
             local f_3 = Create("Instance.new","Frame",{Parent = sf_,Name = "Button",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
             local tbtn_ = Create("Instance.new","TextButton",{Parent = f_3,BackgroundTransparency = 1,Size = UDim2.new(1,0,1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_1.Title and options_1.Title ~= "" and options_1.Title) or "Button",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left})
             Create("Instance.new","UIPadding",{Parent = tbtn_,PaddingLeft = UDim.new(0.02,0)})
-            tbtn_.Activated:Connect(function()
-                local success,err = pcall(function()
-                    if typeof(options_1.Callback) == "function" then
-                        options_1.Callback()
+            tbtn_.Activated:Connect(function() 
+                if typeof(options_1.Callback) == "function" then
+                    local ok,err = pcall(options_1.Callback)
+                    if not ok then
+                        warn(("[ZeroLib][%s] Error: %s"):format(options_1.Flag or "Flagged",err))
                     end
-                end)
-                if not success then
-                    warn("[ZeroLib]["..(options_1.Flag or "Flagged").."] Error: "..err)
                 end
-                local twn = ts:Create(tbtn_,TweenInfo.new(.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)})
-                twn:Play()
-                twn.Completed:Wait()
-                local twn_ = ts:Create(tbtn_,TweenInfo.new(.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)})
-                twn_:Play()
-                twn_.Completed:Wait()
+            end)
+            tbtn_.MouseEnter:Connect(function()
+                ts:Create(tbtn_,TweenInfo.new(.3,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)}):Play()
+            end)
+            tbtn_.MouseLeave:Connect(function()
+                ts:Create(tbtn_,TweenInfo.new(.3,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)}):Play()
             end)
         end
         function Elements:AddToggle(options_2)
@@ -90,21 +107,25 @@ function Library:CreateWindow(options)
             end
             local tbtn_1 = Create("Instance.new","TextButton",{Parent = f_4,Name = "Tigger",Size = UDim2.new(1,0,1,0),BackgroundTransparency = 1,Text = "",})
             local toggled = false
-            local twn
+            local debounce = false
             tbtn_1.Activated:Connect(function()
-                if twn and twn.PlaybackState == Enum.PlaybackState.Playing then return end
+                if debounce then return end
+                debounce = true
                 toggled = not toggled
-                local success,err = pcall(function()
-                    if typeof(options_2.Callback) == "function" then
-                        options_2.Callback(toggled)
+                if typeof(options_2.Callback) == "function" then
+                    local ok,err = pcall(options_2.Callback,toggled)
+                    if not ok then
+                        warn(("[ZeroLib][%s] Error: %s"):format(options_2.Flag or "Flagged",err))
                     end
-                end)
-                if not success then
-                    warn("[ZeroLib]["..(options_2.Flag or "Flagged").."] Error: "..err)
                 end
-                twn = ts:Create(f_5,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = toggled and Color3.fromRGB(0,255,0) or Color3.fromRGB(35,35,35)})
-                twn:Play()
-                twn.Completed:Wait()
+                if toggled then 
+                    ts:Create(f_5,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = Color3.fromRGB(0,255,0)}):Play()
+                    ts:Create(tl_,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(255,30,109)}):Play()
+                else
+                    ts:Create(f_5,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundColor3 = Color3.fromRGB(35,35,35)}):Play()
+                    ts:Create(tl_,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+                end
+                task.delay(0.3,function() debounce = false end)
             end)
         end
         function Elements:AddLabel(options_3)
@@ -114,19 +135,51 @@ function Library:CreateWindow(options)
             local function resize()
                 local size = 0.1
                 tl_2.TextSize = 13
-                for _ = 1,2 do f_6.Size = UDim2.new(0.98,0,size,0) task.wait() if tl_2.TextFits then return end size += 0.01 end
-                for i = 12,10,-1 do tl_2.TextSize = i task.wait() if tl_2.TextFits then return end end
+                for _ = 1,2 do
+                    f_6.Size = UDim2.new(0.98,0,size,0)
+                    task.wait()
+                    if tl_2.TextFits then
+                        return
+                    end
+                    size += 0.01
+                end
+                for i = 12,10,-1 do
+                    tl_2.TextSize = i
+                    task.wait()
+                    if tl_2.TextFits then
+                        return
+                    end
+                end
             end
             resize()
             local obj = {}
-            function obj:Update(new) tl_2.Text = new resize() end
-            function obj:Get() return tl_2.Text end
+            function obj:Update(new)
+                tl_2.Text = new
+                resize()
+            end
+            function obj:Get()
+                return tl_2.Text
+            end
             return obj
         end
         return Elements
     end
     return Tabs
 end
-function Library:Destroy() if self.esg then self.esg:Destroy() self.esg = nil end end
-function Library:SetKeyBind(new) local key = Enum.KeyCode[new:upper()] if key and not ({W=true,A=true,S=true,D=true})[new:upper()] then self._keybind = key return true else warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(new)) return false end end
+function Library:Destroy()
+    if self.esg then
+        self.esg:Destroy()
+        self.esg = nil
+    end
+end
+function Library:SetKeyBind(new)
+    local key = Enum.KeyCode[new:upper()]
+    if key and not ({W=true,A=true,S=true,D=true})[new:upper()] then 
+        self._keybind = key
+        return true
+    else
+        warn("[ZeroLib] Invalid or blocked KeyBind: "..tostring(new))
+        return false
+    end
+end
 return Library
