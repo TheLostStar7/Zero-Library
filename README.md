@@ -14,6 +14,8 @@ Hopefully I'm Gonna Add A Dropdown.
 
 New:
 
+New Function With Of Course Subtitles Functions, AddInput. Makes An InputBox The Subtitles Functions Will Be Below It!
+
 Message:
 
 Guys please bare with me, i need some time to think about a button design but for now we'll have this.
@@ -98,10 +100,10 @@ local Toggle = Tab:AddToggle({Title = "YO",Description = "IT'S ME THE ONE AND ON
     print("Googlely Goggles.")
 end,})
 --[[
-Title = <string> - The Name Of The Button.
+Title = <string> - The Name Of The Toggle.
 Description = <string> - The Name Of The Description.
 Flag = <string> - The Name Of The Flag Report.
-Callback = <function> - The Function Of The Button.
+Callback = <function> - The Function Of The Toggle.
 ]]
 ```
 
@@ -123,5 +125,32 @@ Argument[1] = <string> - The New Text Of The Label.
 Text:Get()
 --[[
 Gives You The Current Text.
+]]
+```
+
+
+## Input.
+```lua
+Tab:AddInput({Title = "Printer", Description = "Print Stuff!",Flag = "Printer",Callback = function(text)
+    print(text)
+end,})
+--[[
+Title = <string> - The Name Of The Input.
+Description = <string> - The Name Of The Description.
+Flag = <string> - The Flag Name Of The Input.
+Callback = <function> - The Function Of The Input.
+]]
+```
+### Input Subtitle Functions.
+```lua
+Input:GetText()
+--[[
+Returns The Text Of The Input From The Variable Of The AddInput.
+]]
+```
+```lua
+Input:SetText("Hello")
+--[[
+Argument[1] = <string> - Inputs The Text You Put In.
 ]]
 ```
