@@ -6,11 +6,6 @@ function Library:CreateWindow(options)
     local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
     Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3})
-    if options.Button then
-        local fbtn = Create("Instance.new","Frame",{Parent = sg,Name = "Button Frame",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0,0,0.16,0),Size = UDim2.new(0,130,0,50),Active = true,Draggable = true})
-        local btn = Create("Instance.new","TextButton",{Parent = fbtn,Name = "Main Button",BackgroundColor3 = Color3.fromRGB(50,50,50),BorderSizePixel = 0,Position = UDim2.new(0,5,0,6),Size = UDim2.new(0,120,0,38),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = "Close/Open",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 17})
-        btn.Activated:Connect(function() f.Visible = not f.Visible end)
-    end
     local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
     local tl = Create("Instance.new","TextLabel",{Parent = f,Name = "Title",BackgroundTransparency = 1,Size = UDim2.new(0.4,0,0.1,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options.Title and options.Title ~= "" and options.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
     Create("Instance.new","UIPadding",{Parent = tl,PaddingBottom = UDim.new(0.4,0),PaddingLeft = UDim.new(0.02,0)})
@@ -166,6 +161,32 @@ function Library:CreateWindow(options)
                 return tl_2.Text
             end
             return obj
+        end
+        function Elements:AddInput(options_4)
+            local f_7 = Create("Instance.new","Frame",{Parent = sf_,Name = "Input Box",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Size = UDim2.new(0.98,0,0.1,0),ClipsDescendants = true})
+            local tb = Create("Instance.new","TextBox",{Parent = f_7,Name = "Input",BackgroundColor3 = Color3.fromRGB(35,35,35),BorderSizePixel = 0,Position = UDim2.new(0.81,0,0.213,0),Size = UDim2.new(0.169,0,0.6,0),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextColor3 = Color3.fromRGB(255,255,255),TextSize = 10,Text = "",TextWrapped = true,ClearTextOnFocus = true,PlaceholderText = "...",RichText = true,ClipsDescendants = true})
+            local tl_3 = Create("Instance.new","TextLabel",{Parent = f_7,Name = "Title",BackgroundTransparency = 1,Size = (options_4.Description and UDim2.new(0.9,0,0.7,0) or UDim2.new(0.9,0,1,0)),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_4.Title and options_4.Title ~= "" and options_4.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
+            Create("Instance.new","UIPadding",{Parent = tl_3,PaddingLeft = UDim.new(0.02,0)})
+            if options_4.Description then
+                local tl_4 = Create("Instance.new","TextLabel",{Parent = f_7,Name = "Description",Position = UDim2.new(0,0,0.58,0),Size = UDim2.new(0.9,0,0.4,0),BackgroundTransparency = 1,Text = (options_4.Description and options_4.Description ~= "" and options_4.Description) or "Description",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 10,FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true})
+                Create("Instance.new","UIPadding",{Parent = tl_4,PaddingLeft = UDim.new(0.02,0)})
+            end
+            tb.FocusLost:Connect(function()
+                if typeof(options_4.Callback) == "function" then
+                    local ok,err = pcall(options_4.Callback,tb.Text)
+                    if not ok then
+                        warn(("[ZeroLib][%s] Error: %s"):format(options_4.Flag or "Flagged",err))
+                    end
+                end
+            end)
+            local obj_ = {}
+            function obj_:GetText()
+                return tb.Text
+            end
+            function obj_:SetText(new)
+                tb.Text = new
+            end
+            return obj_
         end
         return Elements
     end
