@@ -40,15 +40,6 @@ Loads The UI Library/UI Lib
 ]]
 ```
 
-## Window.
-```lua
-local Window = ZeroLib:CreateWindow({Title = "Hello",KeyBind = "E"})
---[[
-Title = <string> - The Name Of The UI.
-KeyBind = <string> - The Keybind To Close/Open The UI.
-]]
-```
-
 ### Destroy.
 ```lua
 ZeroLib:Destroy()
@@ -62,6 +53,15 @@ Destroys The UI Lib
 ZeroLib:SetKeyBind("K")
 --[[
 Argument[1] = <string> - New KeyBind To Close The UI With.
+]]
+```
+
+## Window.
+```lua
+local Window = ZeroLib:CreateWindow({Title = "Hello",KeyBind = "E"})
+--[[
+Title = <string> - The Name Of The UI.
+KeyBind = <string> - The Keybind To Close/Open The UI.
 ]]
 ```
 
@@ -82,7 +82,7 @@ end,})
 Title = <string> - The Name Of The Button.
 Flag = <string> - The Name Of The Flag Report.
 Callback = <function> - The Function Of The Button.
-]]
+]
 ```
 
 ## Toggle.
