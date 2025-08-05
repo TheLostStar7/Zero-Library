@@ -14,6 +14,8 @@ Hopefully I'm Gonna Add A Dropdown.
 
 New:
 
+Fixed Scaling. Method? redzhub I'm talking about the original ui library it used the same method.
+
 New Function With Of Course Subtitles Functions, AddInput. Makes An InputBox The Subtitles Functions Will Be Below It!
 
 Message:
