@@ -4,7 +4,7 @@ local uis,ts,rs = game:GetService("UserInputService"),game:GetService("TweenServ
 function Create(typestring,instance,props) local obj = typestring == "Instance.new" and Instance.new(instance) or typestring == "Drawing.new" and Drawing.new(instance) if not obj then return nil end for i,v in pairs(props or {}) do pcall(function() obj[i] = v end) end return obj end
 function Library:CreateWindow(options)
     local sg = Create("Instance.new","ScreenGui",{Parent = ((syn and syn.protect_gui(sg) or gethui and gethui()) or game:GetService("CoreGui")),Name = "Zero Lib",IgnoreGuiInset = true,ZIndexBehavior = Enum.ZIndexBehavior.Sibling}) self.esg = sg
-    Create("Instance.new","UIScale",{Parent = sg,Scale = math.clamp(math.min(workspace.CurrentCamera.ViewportSize.X/1920,workspace.CurrentCamera.ViewportSize.Y/1080),0.5,1)})
+    local scale = Create("Instance.new","UIScale",{Parent = sg,Scale = math.clamp(math.min(workspace.CurrentCamera.ViewportSize.X/1920,workspace.CurrentCamera.ViewportSize.Y/1080),0.5,1)})
     local f = Create("Instance.new","Frame",{Parent = sg,Name = "Main",BackgroundColor3 = Color3.fromRGB(25,25,25),BorderSizePixel = 0,Position = UDim2.new(0.11680916,0,0.148900136,0),Size = UDim2.new(0.8,0,0.7,0)})
     Create("Instance.new","UIAspectRatioConstraint",{Parent = f,AspectRatio = 1.3})
     local f_ = Create("Instance.new","Frame",{Parent = f,Name = "Line",BackgroundColor3 = Color3.fromRGB(255,30,109),BorderSizePixel = 0,Size = UDim2.new(1,0,0.008,0)})
@@ -33,7 +33,7 @@ function Library:CreateWindow(options)
     end)
     uis.InputChanged:Connect(function(i)
         if d and (i.UserInputType.Name == "MouseMovement" or i.UserInputType.Name == "Touch") then
-            ts:Create(f,TweenInfo.new(.01,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position-ds).X,fs.Y.Scale,fs.Y.Offset+(i.Position-ds).Y)}):Play()
+            ts:Create(f,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position = UDim2.new(fs.X.Scale,fs.X.Offset+(i.Position.X-ds.X)/(scale and scale.Scale or 1),fs.Y.Scale,fs.Y.Offset+(i.Position.Y-ds.Y)/(scale and scale.Scale or 1))}):Play()
         end
     end)
     local keys = {W = true,A = true,S = true,D = true}
@@ -175,11 +175,11 @@ function Library:CreateWindow(options)
             Create("Instance.new","UITextSizeConstraint",{Parent = tb,MaxTextSize = 11,MinTextSize = 10})
             local tl_3 = Create("Instance.new","TextLabel",{Parent = f_7,Name = "Title",BackgroundTransparency = 1,Size = (options_4.Description and UDim2.new(0.9,0,0.7,0) or UDim2.new(0.9,0,1,0)),FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),Text = (options_4.Title and options_4.Title ~= "" and options_4.Title) or "Title",TextColor3 = Color3.fromRGB(200,200,200),TextSize = 13,TextXAlignment = Enum.TextXAlignment.Left,RichText = true})
             Create("Instance.new","UIPadding",{Parent = tl_3,PaddingLeft = UDim.new(0.02,0)})
-            Create("Instance.new","UITextSizeConstraint",{Parent = tl,MaxTextSize = 14,MinTextSize = 13})
+            Create("Instance.new","UITextSizeConstraint",{Parent = tl_3,MaxTextSize = 14,MinTextSize = 13})
             if options_4.Description then
                 local tl_4 = Create("Instance.new","TextLabel",{Parent = f_7,Name = "Description",Position = UDim2.new(0,0,0.58,0),Size = UDim2.new(0.9,0,0.4,0),BackgroundTransparency = 1,Text = (options_4.Description and options_4.Description ~= "" and options_4.Description) or "Description",TextColor3 = Color3.fromRGB(160,160,160),TextSize = 10,FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal),TextXAlignment = Enum.TextXAlignment.Left,TextWrapped = true,RichText = true})
                 Create("Instance.new","UIPadding",{Parent = tl_4,PaddingLeft = UDim.new(0.02,0)})
-                Create("Instance.new","UITextSizeConstraint",{Parent = tl,MaxTextSize = 11,MinTextSize = 10})
+                Create("Instance.new","UITextSizeConstraint",{Parent = tl_4,MaxTextSize = 11,MinTextSize = 10})
             end
             tb.FocusLost:Connect(function()
                 if typeof(options_4.Callback) == "function" then
