@@ -14,6 +14,8 @@ Hopefully I'm Gonna Add A Dropdown.
 
 New:
 
+Hopefully The Text Resizes To Fit. Next Thing Is The Button Official Release. Basically A Permanent One. This Project Might Be Forgotten Since I Really Don't Have A Way To Make The Text Size Perfect On Pc And Mobile.
+
 Fixed Scaling. Method? redzhub I'm talking about the original ui library it used the same method.
 
 New Function With Of Course Subtitles Functions, AddInput. Makes An InputBox The Subtitles Functions Will Be Below It!
